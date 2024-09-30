@@ -96,4 +96,4 @@ COPY --chown=${USERNAME}:${USERNAME} ../ $APP_HOME/
 
 RUN composer install
 
-
+EXPOSE 9000

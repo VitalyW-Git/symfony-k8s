@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: nginx
-          image: adminvitcon/k8s-nginx-http-sceleton:1.0.1
+          image: adminvitcon/k8s-nginx-not-http-sceleton:1.0.2
           ports:
             - containerPort: 80
           env:
