@@ -20,6 +20,13 @@ spec:
           env:
             - name: APP_NAME
               value: "symfony-app"
+          volumeMounts:
+            - mountPath: /var/www/html/public # проект в контейнере
+              name: symfony-storage
+      volumes:
+        - name: symfony-storage
+          persistentVolumeClaim:
+            claimName: symfony-pvc
 ---
 apiVersion: v1
 kind: Service
