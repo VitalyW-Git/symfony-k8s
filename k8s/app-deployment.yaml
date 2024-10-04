@@ -17,6 +17,7 @@ spec:
           image: adminvitcon/k8s-php-sceleton:1.0.2
           ports:
             - containerPort: 9000
+              protocol: TCP
           env:
             - name: DATABASE_URL
               value: "postgresql://db_user:db_password@postgres-db:5432/db_name?serverVersion=13&charset=utf8"
@@ -27,10 +28,10 @@ kind: Service
 metadata:
   name: symfony-app
 spec:
-  type: ClusterIP
+  selector:
+    app: symfony-app
   ports:
     - port: 9000
       targetPort: 9000
       protocol: TCP
-  selector:
-    app: symfony-app
+  type: ClusterIP
