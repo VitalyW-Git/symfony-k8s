@@ -1,3 +1,22 @@
+#apiVersion: v1
+#kind: Pod
+#metadata:
+#  name: nginx
+#spec:
+#  volumes:
+#    - name: symfony-storage
+#      persistentVolumeClaim:
+#        claimName: symfony-pvc
+#  containers:
+#    - name: container-nginx
+#      image: adminvitcon/k8s-nginx-not-http-sceleton:1.0.2
+#      ports:
+#        - name: http-server
+#          containerPort: 80
+#      volumeMounts:
+#        - name: symfony-storage
+#          mountPath: /var/www/html/public
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -7,15 +26,18 @@ spec:
   selector:
     matchLabels:
       app: nginx
+# template описание пода
   template:
     metadata:
       labels:
         app: nginx
+# описание как запустятся контейнеры
     spec:
       containers:
-        - name: nginx
+        - name: container-nginx
           image: adminvitcon/k8s-nginx-not-http-sceleton:1.0.2
           ports:
+#            - name: http-server
             - containerPort: 80
               protocol: TCP
 #          env:
@@ -23,7 +45,7 @@ spec:
 #              value: "symfony-app"
           volumeMounts:
             - name: symfony-storage
-              mountPath: /var/www/html/public # проект в контейнере
+              mountPath: /var/www/html # проект в контейнере
             - name: nginx-config
               mountPath: /etc/nginx/conf.d/default.conf # расположение конфигурационного файла
               subPath: default.conf # имя файла из ConfigMap
